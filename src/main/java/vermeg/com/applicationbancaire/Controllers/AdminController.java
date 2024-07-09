@@ -4,6 +4,8 @@ package vermeg.com.applicationbancaire.Controllers;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AdminController {
     @Autowired
     AdminServiceIMP adminServiceIMP;
@@ -146,5 +149,13 @@ public class AdminController {
             return ResponseEntity.ok(new MessageResponse("Admin is confirmed"));
         }
         return ResponseEntity.ok(new MessageResponse("Admin is Not confirmed"));
+    }
+    @GetMapping("/files/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+        Resource file = storageService.loadFile(filename);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
     }
 }

@@ -100,11 +100,10 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 			.requestMatchers("/client/**").permitAll()
 				.requestMatchers("/financement/**").permitAll()
 				.requestMatchers("/contrat/**").permitAll()
+			.requestMatchers("/api/payment/**").permitAll()
 			.requestMatchers("/swagger-ui/index.html").permitAll()
 			.requestMatchers("/swagger-ui/").permitAll()
 			.requestMatchers("/**").permitAll()
-
-
 
 
 			.anyRequest().authenticated();

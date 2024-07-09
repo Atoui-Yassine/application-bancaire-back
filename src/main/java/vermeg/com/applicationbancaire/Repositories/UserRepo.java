@@ -16,4 +16,7 @@ public interface UserRepo extends JpaRepository <UserModel,Long> {
     Boolean existsByEmail(String email);
     UserModel findFirstByEmail (String email);
     UserModel findByPasswordResetToken(String passwordResetToken);
+    public interface UserRepository extends JpaRepository<UserModel, Long> {
+        UserModel findFirstByEmail(String email);
+    }
 }

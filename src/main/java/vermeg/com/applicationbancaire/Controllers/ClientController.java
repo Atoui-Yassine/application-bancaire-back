@@ -1,4 +1,6 @@
 package vermeg.com.applicationbancaire.Controllers;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import vermeg.com.applicationbancaire.Models.AdminModel;
 import vermeg.com.applicationbancaire.payload.request.SignupRequest;
 import jakarta.mail.MessagingException;
@@ -19,6 +21,8 @@ import vermeg.com.applicationbancaire.utils.utils.StorageService;
 
 @RestController
 @RequestMapping("client")
+@CrossOrigin(origins = "*", maxAge = 3600)
+
 public class ClientController {
     @Autowired
     ClientServiceIMP clientServiceIMP;
@@ -36,8 +40,9 @@ public class ClientController {
       //  admin.setPhoto(name);
        // return clientServiceIMP.Create(admin);
     //}
+
         @PostMapping(path = "/create",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-        ResponseEntity<?> creation(SignupRequest sn, @RequestParam("file") MultipartFile file) throws MessagingException
+        ResponseEntity<?> creation( SignupRequest sn, @RequestParam("file") MultipartFile file) throws MessagingException
         {
             if (clientRepo.existsByUsername(sn.getUsername())) {
                 return ResponseEntity.badRequest().body(new MessageResponse("Error: Client is already taken!"));
@@ -86,36 +91,133 @@ public class ClientController {
         }
 
 
-    @PutMapping(path = "/update/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+        @PutMapping(path="/updateprofilepicture/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+        public ClientModel updatepict(@PathVariable Long id, ClientModel A,@RequestPart MultipartFile file){
 
-    public ClientModel Update(@PathVariable Long id, ClientModel A,@RequestPart MultipartFile file) {
+            A.setId(id);
+            ClientModel ancien = clientServiceIMP.Getone(id);
+            if (A.getUsername() == null) {
+                A.setUsername(ancien.getUsername());
+            }
+
+            if (A.getEmail() == null) {
+                A.setEmail(ancien.getEmail());
+            }
+
+
+            if (A.getRole() == null) {
+                A.setRole(ancien.getRole());
+            }
+
+
+            if (A.getCodeclient() == null) {
+                A.setCodeclient(ancien.getCodeclient());
+            }
+            if (A.getPhone() == null) {
+                A.setPhone(ancien.getPhone());
+            }
+            if (A.getCivilité() == null) {
+                A.setCivilité(ancien.getCivilité());
+            }
+            if (A.getNationnalité() == null) {
+                A.setNationnalité(ancien.getNationnalité());
+            }
+            if (A.getVilledenaissance() == null) {
+                A.setVilledenaissance(ancien.getVilledenaissance());
+            }
+            if (A.getCodepostaledenaissance() == null) {
+                A.setCodepostaledenaissance(ancien.getCodepostaledenaissance());
+            }
+
+            if (A.getPassword() == null) {
+                A.setPassword(ancien.getPassword());
+            } else {
+                A.setPassword(encoder.encode(A.getPassword()));
+            }
+
+            if (A.getPaysdenaissance()==null){
+                A.setPaysdenaissance (ancien.getPaysdenaissance());}
+            if (file.isEmpty()) {
+                A.setPhoto(ancien.getPhoto());
+            } else {
+                String name = storageService.store(file);
+                A.setPhoto(name);
+            }
+            return clientRepo.save(A);
+        }
+
+    @PutMapping(path = "/update/{id}")
+
+    public ClientModel Update(@PathVariable Long id, ClientModel A)throws MessagingException {
         A.setId(id);
         ClientModel ancien = clientServiceIMP.Getone(id);
         if (A.getUsername() == null) {
             A.setUsername(ancien.getUsername());
         }
 
-        if (A.getEmail()==null) {
+        if (A.getEmail() == null) {
             A.setEmail(ancien.getEmail());
         }
 
 
-        if (A.getRole()==null) {
+        if (A.getRole() == null) {
             A.setRole(ancien.getRole());
         }
 
 
-        if (A.getCodeclient()==null) {
+        if (A.getCodeclient() == null) {
             A.setCodeclient(ancien.getCodeclient());
         }
+        if (A.getPhone() == null) {
+            A.setPhone(ancien.getPhone());
+        }
+        if (A.getCivilité() == null) {
+            A.setCivilité(ancien.getCivilité());
+        }
+        if (A.getNationnalité() == null) {
+            A.setNationnalité(ancien.getNationnalité());
+        }
+        if (A.getVilledenaissance() == null) {
+            A.setVilledenaissance(ancien.getVilledenaissance());
+        }
+        if (A.getCodepostaledenaissance() == null) {
+            A.setCodepostaledenaissance(ancien.getCodepostaledenaissance());
+        }
 
-        String name = storageService.store(file);
-        A.setPhoto(name);
-        return clientServiceIMP.Update(A);
+        if (A.getPassword() == null) {
+            A.setPassword(ancien.getPassword());
+        } else {
+            A.setPassword(encoder.encode(A.getPassword()));
+        }
+
+        if (A.getPaysdenaissance()==null){
+            A.setPaysdenaissance (ancien.getPaysdenaissance());}
+
+
+        if (A.getPhoto()==null) {
+                A.setPhoto(ancien.getPhoto());
+            }
+
+
+        clientRepo.save(A);
+        String from = "test.mail.com";
+        String to = A.getEmail();
+        String subject = "le Compte a été modifé avec succés";
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(message);
+        messageHelper.setSubject(subject);
+        messageHelper.setTo(to);
+        messageHelper.setFrom(from);
+        messageHelper.setText("<HTML>l<body>" +
+                " <a href=\"http://localhost:8085/client/confirm?email="
+                +A.getEmail() + "\">VERIFY</a></body></HTML>", true);
+        javaMailSender.send(message);//envoyer email
+        return (A);
+
     }
 
 
-    @GetMapping("/findAdminById/{id}")
+    @GetMapping("/findClientById/{id}")
     public ClientModel getOneAdmin(@PathVariable Long id) {
 
         return clientServiceIMP .Getone(id);
@@ -135,5 +237,15 @@ public class ClientController {
         }
         return ResponseEntity.ok(new MessageResponse("client is Not confirmed"));
     }
+    @GetMapping("/files/{filename:.+}")
+    @ResponseBody
+
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+        Resource file = storageService.loadFile(filename);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+    }
+
 }
 

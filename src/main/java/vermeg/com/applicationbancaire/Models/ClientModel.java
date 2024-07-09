@@ -1,6 +1,9 @@
 package vermeg.com.applicationbancaire.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="Client")
@@ -12,6 +15,17 @@ public class ClientModel extends UserModel {
     private String paysdenaissance;
     private String Nationnalité;
 
+    @OneToMany(mappedBy="clientmap")
+    List<ContratModel> listcontrat;
+
+    @JsonIgnore
+    public List<ContratModel> getListcontrat() {
+        return listcontrat;
+    }
+
+    public void setListcontrat(List<ContratModel> listcontrat) {
+        this.listcontrat = listcontrat;
+    }
 
     public String getCodeclient() {
         return codeclient;
@@ -33,6 +47,7 @@ public class ClientModel extends UserModel {
         this.codepostaledenaissance = codepostaledenaissance;
         this.paysdenaissance = paysdenaissance;
         Nationnalité = nationnalité;
+
     }
 
     public String getCivilité() {
@@ -74,4 +89,5 @@ public class ClientModel extends UserModel {
     public void setNationnalité(String nationnalité) {
         Nationnalité = nationnalité;
     }
+
 }

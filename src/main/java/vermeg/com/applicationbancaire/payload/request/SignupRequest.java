@@ -1,5 +1,6 @@
 package vermeg.com.applicationbancaire.payload.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -12,6 +13,7 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;
+    @Email
     @NotBlank(message = "Le champ ne doit pas Etre vide")
     private String email;
     @NotBlank(message = "Le champ ne doit pas Etre vide")

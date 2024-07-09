@@ -26,4 +26,7 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+    public interface RefreshTokenService {
+        void deleteByUserId(Long userId);
+    }
 }

@@ -54,4 +54,5 @@ public class RefreshToken {
 
     public RefreshToken() {
     }
+
 }

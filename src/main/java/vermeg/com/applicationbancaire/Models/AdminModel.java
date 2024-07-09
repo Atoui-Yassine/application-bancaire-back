@@ -8,9 +8,6 @@ public class AdminModel extends UserModel {
 
     private String codeAdmin;
 
-
-
-
     public String getCodeAdmin() {
         return codeAdmin;
     }

@@ -125,4 +125,7 @@ public class UserModel {
     public void setPasswordResetToken(String passwordResetToken) {
         this.passwordResetToken = passwordResetToken;
     }
+
+
+
 }

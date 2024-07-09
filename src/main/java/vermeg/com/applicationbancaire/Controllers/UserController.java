@@ -21,6 +21,7 @@ import vermeg.com.applicationbancaire.utils.utils.StorageService;
 
 @RestController
 @RequestMapping
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 @Autowired
     UserServiceIMP userServiceIMP;
@@ -76,6 +77,7 @@ StorageService storageService;
             javaMailSender.send(message);//envoyer email
             return ResponseEntity.ok().body("user is created");
         }
+
 
     }
 

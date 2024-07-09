@@ -10,7 +10,7 @@ import vermeg.com.applicationbancaire.Services.CGUService;
 
 @RestController
 @RequestMapping ("CGU")
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 
 
 public class CGUController {

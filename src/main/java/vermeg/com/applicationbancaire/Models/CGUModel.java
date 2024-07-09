@@ -1,13 +1,16 @@
 package vermeg.com.applicationbancaire.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name="CGU")
-public class CGUModel extends PJModel {
+public class CGUModel  {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//héritage car classe mère
+    private Long id;
     private Date date ;
     private String signature ;
     private String nombredepages;
@@ -48,12 +51,18 @@ public class CGUModel extends PJModel {
     public CGUModel() {
     }
 
-    public CGUModel(String byle, Date date, String signature, String nombredepages, String type) {
-        super(byle);
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public CGUModel(Date date, String signature, String nombredepages, String type) {
         this.date = date;
         this.signature = signature;
         this.nombredepages = nombredepages;
         this.type = type;
     }
-
 }

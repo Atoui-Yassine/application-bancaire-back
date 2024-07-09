@@ -4,26 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import vermeg.com.applicationbancaire.Models.AdminModel;
-import vermeg.com.applicationbancaire.Models.ClientModel;
-import vermeg.com.applicationbancaire.Models.ContratModel;
-import vermeg.com.applicationbancaire.Services.IMP.AdminServiceIMP;
-import vermeg.com.applicationbancaire.Services.IMP.ContratServiceIMP;
+import vermeg.com.applicationbancaire.Models.*;
+import vermeg.com.applicationbancaire.Repositories.ContratRepo;
+import vermeg.com.applicationbancaire.Services.IMP.*;
 import vermeg.com.applicationbancaire.utils.utils.StorageService;
 
 @RestController
 @RequestMapping("contrat")
-public class contratController {
+@CrossOrigin(origins = "*", maxAge = 3600)public class contratController {
     @Autowired
     ContratServiceIMP contratServiceIMP;
     @Autowired
     StorageService storageService;
-
-    @PostMapping( "/create")
-    public ContratModel createOfAdmin(ContratModel contrat) {
+@Autowired  ClientServiceIMP clientServiceIMP;
+@Autowired PIDServiceIMP pidServiceIMP;
+@Autowired CGUServiceIMP cguServiceIMP;
+@Autowired PJServiceIMP pjServiceIMP;
+@Autowired  ContratRepo contratRepo;
+    @PostMapping( "/create/{idclient}")
+    public ContratModel createOfAdmin(ContratModel contrat,@PathVariable Long idclient) {
+        ClientModel C=clientServiceIMP.Getone(idclient);
+        contrat.setClientmap(C);
         return contratServiceIMP.Create(contrat);
-
     }
+
+
     @PutMapping(path = "/update/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 
     public ContratModel Update(@PathVariable Long id, ContratModel B) {
@@ -53,11 +58,37 @@ public class contratController {
 
 
 
+//Ajout piece identité (attcahement)
+@PostMapping("/addPID/{IDcontrat}/{idpid}")
+    public  ContratModel ajoutpiID(@PathVariable Long IDcontrat,@PathVariable Long idpid)
+{
+    ContratModel c =contratServiceIMP.Getone(IDcontrat);
+    PIDModel pidm = pidServiceIMP.Getone(idpid);
+    c.setPieceidentites(pidm);
+    return contratRepo.save(c);
+}
 
 
+    //Ajout piece justificatifs (attachement)
+    @PostMapping("/addPJD/{IDcontrat}/{idpjid}")
+    public  ContratModel ajoutidpjid(@PathVariable Long IDcontrat,@PathVariable Long idpjid)
+    {
+        ContratModel c =contratServiceIMP.Getone(IDcontrat);
+        PJModel just = pjServiceIMP.Getone(idpjid);
+      c.setPiecejustfs(just);
+        return contratRepo.save(c);
+    }
 
 
-
+    //Attachement des conditions generales
+    @PostMapping("/attachCGU/{IDcontrat}/{idcgu}")
+    public  ContratModel attachCGU(@PathVariable Long IDcontrat,@PathVariable Long idcgu)
+    {
+        ContratModel c =contratServiceIMP.Getone(IDcontrat);
+        CGUModel cum = cguServiceIMP.Getone(idcgu);
+        c.setConditiongenerales(cum);
+        return contratRepo.save(c);
+    }
 
 
 
