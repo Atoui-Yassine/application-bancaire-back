@@ -145,27 +145,14 @@
             <version>20.80.0</version>
         </dependency>
 
-
-<!--        <dependency>-->
-<!--            <groupId>org.camunda.bpm.springboot</groupId>-->
-<!--            <artifactId>camunda-bpm-spring-boot-starter</artifactId>-->
-<!--            <version>7.16.0</version>-->
-<!--        </dependency>-->
-
-
-
-
+       
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+            <version>7.21.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <!-- Évitez d'exclure des modules critiques -->
-            </exclusions>
-        </dependency>
+
+
                 </dependencies>
 
                 <build>
