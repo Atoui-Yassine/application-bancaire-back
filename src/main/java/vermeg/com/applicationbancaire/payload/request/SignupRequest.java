@@ -38,7 +38,7 @@ public class SignupRequest {
     private String paysdenaissance;
     @NotBlank(message = "Le champ ne doit pas Etre vide")
     private String Nationnalité;
-    @NotBlank(message = "Le champ ne doit pas Etre vide")
+
 
     public String getCodeAdmin() {
         return codeAdmin;

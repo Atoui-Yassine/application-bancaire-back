@@ -1,0 +1,68 @@
+{
+  "components": [
+    {
+      "key": "civility",
+      "label": "civility",
+      "type": "textfield",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_1m2s60j"
+    },
+    {
+      "label": "nom",
+      "type": "textfield",
+      "id": "Field_175nz0n",
+      "key": "nom"
+    },
+    {
+      "label": "prenom",
+      "type": "textfield",
+      "id": "Field_1mewh3z",
+      "key": "prenom"
+    },
+    {
+      "label": " Date de naissance",
+      "type": "textfield",
+      "id": "Field_06a4ovl",
+      "key": "dn"
+    },
+    {
+      "label": "Villede naissance",
+      "type": "textfield",
+      "id": "Field_1huydq3",
+      "key": "vn"
+    },
+    {
+      "label": "Code postal de naissance",
+      "type": "textfield",
+      "id": "Field_12upllt",
+      "key": "codep"
+    },
+    {
+      "label": "Paye de naissance",
+      "type": "textfield",
+      "id": "Field_0vp3fmd",
+      "key": "pyn"
+    },
+    {
+      "label": "nationalite ",
+      "type": "textfield",
+      "id": "Field_1muox8a",
+      "key": "nationalite"
+    },
+    {
+      "label": "email",
+      "type": "textfield",
+      "id": "Field_0k4rcxj",
+      "key": "email"
+    }
+  ],
+  "type": "default",
+  "id": "Form_donnes_personlles",
+  "exporter": {
+    "name": "flowvioo form editor",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 7
+}

@@ -73,7 +73,7 @@ public class ClientController {
                 a.setPhoto(namephoto);
                 // creation de admin
                 clientServiceIMP.Create(a);
-                String from = "test.mail.com";
+                String from = "yassin2016.attoui@gmail.com";
                 String to = a.getEmail();
                 String subject = "confirmation";
                 MimeMessage message = javaMailSender.createMimeMessage();

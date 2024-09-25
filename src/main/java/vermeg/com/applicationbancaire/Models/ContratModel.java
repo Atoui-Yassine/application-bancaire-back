@@ -1,6 +1,9 @@
 package vermeg.com.applicationbancaire.Models;
 
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
+import vermeg.com.applicationbancaire.utils.utils.CustomDateDeserializer;
 
 
 import java.util.Date;
@@ -11,9 +14,14 @@ public class ContratModel {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
-
     private String codecontrat;
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+
     private Date datedebut;
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+
     private Date datefin;
     @ManyToOne
     @JoinColumn(name="clientid")
@@ -33,7 +41,7 @@ public class ContratModel {
         this.datedebut = datedebut;
         this.datefin = datefin;
     }
-
+    public ContratModel(){}
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,8 +58,7 @@ public class ContratModel {
         this.datefin = datefin;
     }
 
-    public ContratModel() {
-    }
+
 
     public Long getId() {
         return id;
@@ -116,4 +123,6 @@ public class ContratModel {
     public void setConditiongenerales(CGUModel conditiongenerales) {
         this.conditiongenerales = conditiongenerales;
     }
+
+
 }

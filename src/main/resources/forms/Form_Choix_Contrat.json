@@ -1,0 +1,20 @@
+{
+  "components": [
+    {
+      "key": "choix",
+      "label": "choix",
+      "type": "textfield",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_188u0vh"
+    }
+  ],
+  "type": "default",
+  "id": "Form_Choix_Contrat",
+  "exporter": {
+    "name": "flowvioo form editor",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 7
+}

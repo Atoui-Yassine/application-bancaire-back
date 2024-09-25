@@ -1,0 +1,20 @@
+{
+  "components": [
+    {
+      "key": "tp",
+      "label": "Type paiement",
+      "type": "textfield",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_14yimhr"
+    }
+  ],
+  "type": "default",
+  "id": "Form_type_paiement",
+  "exporter": {
+    "name": "flowvioo form editor",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 7
+}

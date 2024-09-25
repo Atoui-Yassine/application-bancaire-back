@@ -1,0 +1,38 @@
+{
+  "components": [
+    {
+      "label": "Montant total",
+      "type": "textfield",
+      "id": "Field_1lfu10r",
+      "key": "mtotale",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Apport personnel",
+      "type": "textfield",
+      "id": "Field_0chcz8w",
+      "key": "a_personnel",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Montant afinancer",
+      "type": "textfield",
+      "id": "Field_1s74aa1",
+      "key": "mafinancer",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_Demande_contrat",
+  "exporter": {
+    "name": "flowvioo form editor",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 7
+}

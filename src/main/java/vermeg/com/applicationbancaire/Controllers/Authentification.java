@@ -1,6 +1,7 @@
 package vermeg.com.applicationbancaire.Controllers;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -110,7 +111,7 @@ System.out.println("step1");
 
 
 
-
+    @Operation(summary = "Sign out user", description = "Logs out the authenticated user and invalidates the refresh token")
     @SecurityRequirement(name = "bearerAuth")
 
     @GetMapping("/signout")
@@ -129,7 +130,7 @@ System.out.println("step1");
 
 
 
-
+    @Operation(summary = "Forgot Password", description = "Initiates a password reset by sending a reset token via email")
     @PostMapping("/forgetPassword")
     public HashMap<String, String> resetPassword(@RequestParam("email") String email) throws MessagingException {
         HashMap<String, String> response = new HashMap<>();
@@ -178,8 +179,7 @@ System.out.println("step1");
 
 
 
-
-    @PostMapping("/savePassword/{passwordResetToken}")
+    @Operation(summary = "Save new password", description = "Allows a user to set a new password using the reset token")
     public HashMap<String,String> savepassword(@PathVariable String passwordResetToken, String newpassword)
     {   HashMap messaj = new HashMap();
         UserModel existuser = utilisateurrepot.findByPasswordResetToken(passwordResetToken);

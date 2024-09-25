@@ -3,7 +3,6 @@ package vermeg.com.applicationbancaire.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import vermeg.com.applicationbancaire.Models.*;
 import vermeg.com.applicationbancaire.Repositories.ContratRepo;
 import vermeg.com.applicationbancaire.Services.IMP.*;
@@ -11,7 +10,8 @@ import vermeg.com.applicationbancaire.utils.utils.StorageService;
 
 @RestController
 @RequestMapping("contrat")
-@CrossOrigin(origins = "*", maxAge = 3600)public class contratController {
+@CrossOrigin(origins = "*", maxAge = 3600)
+public class contratController {
     @Autowired
     ContratServiceIMP contratServiceIMP;
     @Autowired
@@ -21,8 +21,9 @@ import vermeg.com.applicationbancaire.utils.utils.StorageService;
 @Autowired CGUServiceIMP cguServiceIMP;
 @Autowired PJServiceIMP pjServiceIMP;
 @Autowired  ContratRepo contratRepo;
-    @PostMapping( "/create/{idclient}")
-    public ContratModel createOfAdmin(ContratModel contrat,@PathVariable Long idclient) {
+    @PostMapping( "/created/{idclient}")
+    public ContratModel createOfAdmin(@RequestBody  ContratModel contrat,@PathVariable Long idclient) {
+        System.out.println("Contrat reçu : " + contrat);
         ClientModel C=clientServiceIMP.Getone(idclient);
         contrat.setClientmap(C);
         return contratServiceIMP.Create(contrat);
@@ -49,7 +50,7 @@ import vermeg.com.applicationbancaire.utils.utils.StorageService;
     @GetMapping("/findContratById/{id}")
     public ContratModel getOne(@PathVariable Long id) {
 
-        return contratServiceIMP .Getone(id);
+        return contratServiceIMP.Getone(id);
     }
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {

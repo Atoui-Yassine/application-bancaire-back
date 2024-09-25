@@ -1,0 +1,38 @@
+{
+  "components": [
+    {
+      "key": "typechoix",
+      "label": "choisir type",
+      "type": "textfield",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_0423zr6"
+    },
+    {
+      "key": "verso_path",
+      "label": "verso path",
+      "type": "textfield",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_0lobu9e"
+    },
+    {
+      "label": "recto path",
+      "type": "textfield",
+      "id": "Field_1xxq6i4",
+      "key": "recto_path",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_pieces_Justicatives",
+  "exporter": {
+    "name": "flowvioo form editor",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 7
+}

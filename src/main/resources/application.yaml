@@ -1,7 +1,90 @@
-camunda.bpm:
-  admin-user:
-    id: demo
-    password: demo
-    firstName: Demo
-  filter:
-    create: All tasks
+spring:
+  application:
+    name: applicationbancaire
+
+  jackson:
+    date-format: "yyyy-MM-dd"
+    time-zone: "UTC"
+  datasource:
+    url: jdbc:mysql://localhost:3306/ProjectClientNourHenePFE?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        show_sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none  # Hibernate ne gère pas la création des tables Camunda
+
+  http:
+    multipart:
+      max-file-size: 900KB
+      max-request-size: 900KB
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: yassin2016.attoui@gmail.com
+    password: rynibrvlkcutagbj
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8085
+
+app:
+  jwtSecret: bezKoderSecretKey
+  jwtExpirationMs: 6000000
+  jwtRefreshExpirationMs: 12000000
+
+springdoc:
+  api-docs:
+    enabled: true
+    swagger-ui:
+      enabled: true
+      path: /swagger-ui.html
+
+camunda:
+  bpm:
+    enabled: true
+    admin-user:
+      id: demo
+      password: demo
+    rest:
+      enabled: true
+    database:
+      schema-update: false  # Permet à Camunda de créer automatiquement ses tables
+    run:
+      # https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#cross-origin-resource-sharing
+      cors:
+        enabled: true
+        allowed-origins:
+    filter:
+      create: All
+    authorization:
+      enabled: true
+    history-level: full
+    history-time-to-live:
+      enforce: false
+    auto-deployment-enabled: true
+    default-number-of-retries: 3
+    job-execution:
+      enabled: true
+
+
+logging:
+  level:
+    org.camunda.bpm.engine: DEBUG
+    org.springframework: INFO
+    org.hibernate.SQL: DEBUG  # Active les logs des requêtes SQL de Hibernate
+    org.camunda.bpm.engine.persistence: DEBUG  # Active les logs SQL pour Camunda
+    org.hibernate.type: TRACE
