@@ -6,7 +6,7 @@ spring:
     date-format: "yyyy-MM-dd"
     time-zone: "UTC"
   datasource:
-    url: jdbc:mysql://localhost:3306/ProjectClientNourHenePFE?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/projectclientnourhenepfe?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -62,7 +62,7 @@ camunda:
     rest:
       enabled: true
     database:
-      schema-update: false  # Permet à Camunda de créer automatiquement ses tables
+      schema-update: true  # Permet à Camunda de créer automatiquement ses tables
     run:
       # https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#cross-origin-resource-sharing
       cors:

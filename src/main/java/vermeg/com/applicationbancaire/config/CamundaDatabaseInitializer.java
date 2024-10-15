@@ -5,7 +5,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Component;
 
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,11 +34,14 @@ public class CamundaDatabaseInitializer {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to execute Camunda SQL script.", e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("An unexpected error occurred during Camunda initialization.", e);
         }
     }
 
     private boolean isTableExist(Connection connection, String tableName) throws SQLException {
-        // Vérifie si la table existe dans la base de données
+        // Encadrement du nom de la table pour éviter les problèmes de mots-clés réservés dans MySQL
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SHOW TABLES LIKE '" + tableName + "'")) {
             return rs.next();
